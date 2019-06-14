@@ -25,7 +25,7 @@ style_line_break_around_curly <- function(strict, pd) {
     pd$lag_newlines[to_break] <- ifelse(rep(strict, len_to_break),
       1L,
       pmax(1L, pd$lag_newlines[to_break])
-    )
+    ) + 1
   }
   pd
 }
@@ -34,6 +34,13 @@ style_line_break_around_curly <- function(strict, pd) {
 remove_line_break_before_round_closing_after_curly <- function(pd) {
   round_after_curly <- pd$token == "')'" & (pd$token_before == "'}'")
   pd$lag_newlines[round_after_curly] <- 0L
+  pd
+}
+
+# if } follows on }, only 1 line break
+remove_line_break_between_curly <- function(pd) {
+  between_curly <- pd$token == "'}'" & (pd$token_before == "'}'")
+  pd$lag_newlines[between_curly] <- 1L
   pd
 }
 

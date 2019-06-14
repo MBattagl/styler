@@ -128,6 +128,7 @@ tidyverse_style <- function(scope = "tokens",
       style_line_break_around_curly = partial(style_line_break_around_curly,
         strict
       ),
+      remove_line_break_between_curly,
       set_line_break_after_opening_if_call_is_multi_line = if (strict)
         partial(
           set_line_break_after_opening_if_call_is_multi_line,
