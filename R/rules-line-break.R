@@ -18,7 +18,7 @@ set_line_break_around_comma <- function(pd) {
 
 style_line_break_around_curly <- function(strict, pd) {
   if (is_curly_expr(pd) && nrow(pd) > 2) {
-    closing_before <- pd$token == "'}'"
+    closing_before <- pd$token == "'}'" & (pd$token_before != "COMMENT")
     opening_before <- (pd$token == "'{'") & (pd$token_after != "COMMENT")
     to_break <- lag(opening_before, default = FALSE) | closing_before
     len_to_break <- sum(to_break)

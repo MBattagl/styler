@@ -38,7 +38,8 @@ transform_code <- function(path, fun, ...) {
 #' @keywords internal
 transform_mixed <- function(lines, transformer_fun, filetype) {
   chunks <- separate_chunks(lines, filetype)
-  chunks$r_chunks <- map(chunks$r_chunks, transformer_fun)
+  chunks$r_chunks <- map(chunks$r_chunks, transformer_fun) %>%
+    map(~ c(.x, "")) ###### Adds newline to end of chunk
 
   map2(chunks$text_chunks, c(chunks$r_chunks, list(character(0))), c) %>%
     flatten_chr()
